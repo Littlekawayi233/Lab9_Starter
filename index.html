@@ -69,25 +69,31 @@
     </form>
 
     <section id="error-btns">
-      <button>Console Log</button>
-      <button>Console Error</button>
-      <button>Console Count</button>
-      <button>Console Warn</button>
-      <button>Console Assert</button>
-      <button>Console Clear</button>
-      <button>Console Dir</button>
-      <button>Console dirxml</button>
-      <button>Console Group Start</button>
-      <button>Console Group End</button>
-      <button>Console Table</button>
-      <button>Start Timer</button>
-      <button>End Timer</button>
-      <button>Console Trace</button>
-      <button>Trigger a Global Error</button>
+      <button onclick="consoleLog()">Console Log</button>
+      <button onclick="consoleError()">Console Error</button>
+      <button onclick="consoleCount()">Console Count</button>
+      <button onclick="consoleWarn()">Console Warn</button>
+      <button onclick="consoleAssert()">Console Assert</button>
+      <button onclick="consoleClear()">Console Clear</button>
+      <button onclick="consoleDir()">Console Dir</button>
+      <button onclick="consoleDirxml()">Console dirxml</button>
+      <button onclick="consoleGroupStart()">Console Group Start</button>
+      <button onclick="consoleGroupEnd()">Console Group End</button>
+      <button onclick="consoleTable()">Console Table</button>
+      <button onclick="startTimer()">Start Timer</button>
+      <button onclick="endTimer()">End Timer</button>
+      <button onclick="consoleTrace()">Console Trace</button>
+      <button onclick="triggerGlobalError()">Trigger a Global Error</button>
     </section>
   </main>
 
   <script>
+    class ValidationError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = 'ValidationError';
+      }
+    }
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -96,12 +102,78 @@
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
       output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+  try {
+    if(secondNum==0 && operator==='/')
+    {throw new ValidationError('secondNUm can not be 0');}
+    
+} catch (error) {
+   
+  output.innerHTML = 'Error: ' + error.message;
+} finally {
+   
+    console.log('This is wrong');
+}
+
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
     // Start your code here
     // You may move this JS to another file if you wish
+    function consoleLog() {
+      console.log('wrong');
+    }
+    function consoleError() {
+      console.error('console.error');
+    }
+    function consoleCount() {
+      console.count('count');
+    }
+    function consoleWarn() {
+      console.warn('warn');
+    }
+    function consoleAssert() {
+      console.assert(false, '1+2=4');
+    }
+    function consoleClear() {
+      console.clear();
+    }
+    function consoleDir() {
+      console.dir(document.body);
+    }
+    function consoleDirxml() {
+      console.dirxml(document);
+    }
+    function consoleGroupStart() {
+      console.group('folder');
+      
+    }
+
+    function consoleGroupEnd() {
+      console.groupEnd();
+    }
+
+    function consoleTable() {
+      console.table([{ location: 'sd', postcode: 92101 }, { location: 'lajolla', postcode: 92121 }]);
+    }
+
+    function startTimer() {
+      console.time();
+    }
+
+    function endTimer() {
+      console.timeEnd();
+    }
+
+    function consoleTrace() {
+      console.trace('console.trace ');
+    }
+    function triggerGlobalError() {
+      throw new Error('Global error');
+    }
+
+    
+
   </script>
 </body>
 
